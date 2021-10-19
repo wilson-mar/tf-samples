@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# aws-tfsec.sh within https://github.com/wilsonmar/tf-samples
+# aws-tfsec.sh within https://github.com/wilsonmar/tf-samples/blob/main/aws-tfsec.sh
 # This script -Installs and -Upgrades bash, jq, wget, tfsec, then
 # download a GPG secret key for running tfsec, and
 # runs tfsec to a file with a name containing a date/time stamp.
