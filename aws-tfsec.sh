@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-# aws-tfsec.sh
-# This script installs tfsec, then runs it.
+# aws-tfsec.sh within https://github.com/wilsonmar/tf-samples
+# This script -Installs and -Upgrades bash, jq, wget, tfsec, then
+# download a GPG secret key for running tfsec, and
+# runs tfsec to a file with a name containing a date/time stamp.
 
 # SETUP STEP 01 - Capture starting timestamp and display no matter how it ends:
 THIS_PROGRAM="$0"
-SCRIPT_VERSION="v0.0.01"
+SCRIPT_VERSION="v0.0.2"
 # clear  # screen (but not history)
 
 EPOCH_START="$( date -u +%s )"  # such as 1572634619
@@ -28,7 +30,7 @@ args_prompt() {
    echo "   -tf \"tf file name\" "
    echo " "
    echo "USAGE EXAMPLE:"
-   echo "./aws-tfsec.sh -v -tf \"pentesting.tf\" -b \"cdb-stage-redaction-batch\" -setup "
+   echo "./aws-tfsec.sh -v -I -U "
  }
 if [ $# -eq 0 ]; then  # display if no parameters are provided:
    args_prompt
