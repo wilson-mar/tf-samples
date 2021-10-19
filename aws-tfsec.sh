@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 
 # aws-tfsec.sh within https://github.com/wilsonmar/tf-samples/blob/main/aws-tfsec.sh
-# This script -Installs and -Upgrades bash, jq, wget, tfsec, then
+# This script automates https://tfsec.dev/docs/installation/
+# -Installs and -Upgrades bash, jq, wget, git, tfsec, then
 # download a GPG secret key for running tfsec, and
 # runs tfsec to a file with a name containing a date/time stamp.
 
+# cd to folder, copy this line and paste in the terminal:
+# bash -c "$(curl -fsSL https://raw.githubusercontent.com/wilsonmar/tf-samples/main/aws-tfsec.sh)" -v -i
+# This was tested on MacOS 18.7.0 
+
 # SETUP STEP 01 - Capture starting timestamp and display no matter how it ends:
 THIS_PROGRAM="$0"
-SCRIPT_VERSION="v0.0.2"
-# clear  # screen (but not history)
+SCRIPT_VERSION="v0.0.3"
 
 EPOCH_START="$( date -u +%s )"  # such as 1572634619
 LOG_DATETIME=$( date +%Y-%m-%dT%H%M%S%z)
+# clear  # screen (but not history)
 echo "  $THIS_PROGRAM $SCRIPT_VERSION ============== $LOG_DATETIME "
 
 # SETUP STEP 02 - Ensure run variables are based on arguments or defaults ..."
@@ -181,19 +186,18 @@ pause_for_confirmation() {
 }
 
 # SETUP STEP 06 - Check what operating system is in use:
-   OS_TYPE="$( uname )"
    OS_DETAILS=""  # default blank.
+   OS_TYPE="$( uname )"
 if [ "$(uname)" == "Darwin" ]; then  # it's on a Mac:
       OS_TYPE="macOS"
+      OS_DETAILS=$( uname -r )  # like "18.7.0"
       PACKAGE_MANAGER="brew"
 elif [ "$(uname)" == "Linux" ]; then  # it's on a Mac:
    if command -v lsb_release ; then
-      lsb_release -a
       OS_TYPE="Ubuntu"
+      OS_VERSION=$( uname -r )   # or lsb_release -d  "Description:	Debian GNU/Linux 9.5 (stretch)"
       # TODO: OS_TYPE="WSL" ???
       PACKAGE_MANAGER="apt-get"
-
-      # TODO: sudo dnf install pipenv  # for Fedora 28
 
       silent-apt-get-install(){  # see https://wilsonmar.github.io/bash-scripts/#silent-apt-get-install
          if [ "${RUN_VERBOSE}" = true ]; then
@@ -222,7 +226,7 @@ else
    error "Operating system not anticipated. Please update script. Aborting."
    exit 0
 fi
-# note "OS_DETAILS=$OS_DETAILS"
+note "OS_DETAILS=$OS_DETAILS"
 
 # SETUP STEP 07 - Define utility functions, such as bash function to kill process by name:
 ps_kill(){  # $1=process name
@@ -313,7 +317,7 @@ else
    BASHFILE="$HOME/.bashrc"  # on Linux
 fi
    debug_echo "Running $0 in $PWD"  # $0 = script being run in Present Wording Directory.
-   debug_echo "OS_TYPE=$OS_TYPE using $PACKAGE_MANAGER from $DISK_PCT_FREE disk free"
+   debug_echo "OS_TYPE=$OS_TYPE $OS_DETAILS using $PACKAGE_MANAGER from $DISK_PCT_FREE disk free"
    debug_echo "on hostname=$HOSTNAME at PUBLIC_IP=$PUBLIC_IP."
    debug_echo " "
 
