@@ -12,7 +12,7 @@
 
 # SETUP STEP 01 - Capture starting timestamp and display no matter how it ends:
 THIS_PROGRAM="$0"
-SCRIPT_VERSION="v0.0.3"
+SCRIPT_VERSION="v0.0.4"
 
 EPOCH_START="$( date -u +%s )"  # such as 1572634619
 LOG_DATETIME=$( date +%Y-%m-%dT%H%M%S%z)
@@ -485,8 +485,8 @@ SIGNING_FILEPATH="signing.asc"
       exit -1
    fi
 
-
-TFSEC_OUTPUT_FILE="tfsec.$LOG_DATETIME.txt"
+CURRENT_FOLDER=${PWD##*/} 
+TFSEC_OUTPUT_FILE="tfsec.$CURRENT_FOLDER.$LOG_DATETIME.txt"
 note "tfsec . --no-color --concise-output --out $TFSEC_OUTPUT_FILE "
    tfsec . --no-color --out "$TFSEC_OUTPUT_FILE"
       #  --concise-output
