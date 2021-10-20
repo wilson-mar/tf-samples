@@ -7,7 +7,7 @@
 # runs tfsec to a file with a name containing a date/time stamp.
 
 # cd to folder, copy this line and paste in the terminal:
-# bash -c "$(curl -fsSL https://raw.githubusercontent.com/wilsonmar/tf-samples/main/aws-tfsec.sh)" -v -i
+# bash -c "$(curl -fsSL https://raw.githubusercontent.com/wilsonmar/tf-samples/main/aws-tfsec.sh)" -v 
 # This was tested on MacOS 18.7.0 
 
 # SETUP STEP 01 - Capture starting timestamp and display no matter how it ends:
