@@ -485,7 +485,7 @@ SIGNING_FILEPATH="signing.asc"
       exit -1
    fi
 
-CURRENT_FOLDER=${PWD##*/} 
+CURRENT_FOLDER=$( basename "$PWD" )   # or ${PWD##*/} 
 TFSEC_OUTPUT_FILE="tfsec.$CURRENT_FOLDER.$LOG_DATETIME.txt"
 note "tfsec . --no-color --concise-output --out $TFSEC_OUTPUT_FILE "
    tfsec . --no-color --out "$TFSEC_OUTPUT_FILE"
